@@ -1,6 +1,7 @@
 package twittersearch
 
 import static java.awt.BorderLayout.*
+import groovy.model.ValueHolder
 
 application(title: 'TwitterSearch',
   preferredSize: [350, 400],
@@ -12,15 +13,18 @@ application(title: 'TwitterSearch',
                imageIcon('/griffon-icon-16x16.png').image]) {
 
    panel(constraints:NORTH) {
-       textField columns:15
-       button '検索', actionPerformed: controller.&search
+       textField columns:15, text: bind(target:model, 'searchText')
+       button '検索', actionPerformed: controller.&search, enabled: bind{model.searchText}
    }
+   def rowsModel = new ValueHolder()
    scrollPane(constraints:CENTER) {
        table {
-           tableModel(id:'searchResult') {
+           tableModel(id:'searchResult', rowsModel:rowsModel) {
                propertyColumn header: 'User', propertyName: 'fromUser'
                propertyColumn header: 'Tweet', propertyName: 'text'
            }
        }
    }
+   bean rowsModel, value:bind{model.tweets}
+
 }

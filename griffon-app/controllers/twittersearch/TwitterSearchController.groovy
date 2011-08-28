@@ -6,7 +6,7 @@ class TwitterSearchController {
     def view
 
     def search = {
-        view.searchResult.rowsModel.value = [
+        model.tweets = [
             [fromUser:'kiy0taka', text:'Griffonなう。'],
             [fromUser:'kiy0taka', text:'@groovybook Gマガ読んだよ！']
         ]

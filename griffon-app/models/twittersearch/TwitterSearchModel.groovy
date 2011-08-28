@@ -3,5 +3,6 @@ package twittersearch
 import groovy.beans.Bindable
 
 class TwitterSearchModel {
-   // @Bindable String propName
+    @Bindable String searchText
+    @Bindable List tweets
 }
