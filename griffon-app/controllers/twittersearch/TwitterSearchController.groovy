@@ -9,7 +9,10 @@ class TwitterSearchController {
     def twitter
 
     def search = {
-        model.tweets = twitter.search(new Query(model.searchText)).tweets
-        view.searchResult.fireTableDataChanged()
+        def tweets = twitter.search(new Query(model.searchText)).tweets
+        execAsync {
+            model.tweets = tweets
+            view.searchResult.fireTableDataChanged()
+        }
     }
 }
