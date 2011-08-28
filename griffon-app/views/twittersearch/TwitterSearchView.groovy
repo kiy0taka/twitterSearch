@@ -11,11 +11,22 @@ application(title: 'TwitterSearch',
                imageIcon('/griffon-icon-32x32.png').image,
                imageIcon('/griffon-icon-16x16.png').image]) {
 
-    panel(constraints:NORTH) {
-        textField columns:15
-        button '検索'
-    }
-    scrollPane(constraints:CENTER) {
-        table()
-    }
+   panel(constraints:NORTH) {
+       textField columns:15
+       button '検索', actionPerformed: {
+           searchResult.rowsModel.value = [
+               [fromUser:'kiy0taka', text:'Griffonなう。'],
+               [fromUser:'kiy0taka', text:'@groovybook Gマガ読んだよ！']
+           ]
+           searchResult.fireTableDataChanged()
+       }
+   }
+   scrollPane(constraints:CENTER) {
+       table {
+           tableModel(id:'searchResult') {
+               propertyColumn header: 'User', propertyName: 'fromUser'
+               propertyColumn header: 'Tweet', propertyName: 'text'
+           }
+       }
+   }
 }
