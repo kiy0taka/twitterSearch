@@ -13,13 +13,7 @@ application(title: 'TwitterSearch',
 
    panel(constraints:NORTH) {
        textField columns:15
-       button '検索', actionPerformed: {
-           searchResult.rowsModel.value = [
-               [fromUser:'kiy0taka', text:'Griffonなう。'],
-               [fromUser:'kiy0taka', text:'@groovybook Gマガ読んだよ！']
-           ]
-           searchResult.fireTableDataChanged()
-       }
+       button '検索', actionPerformed: controller.&search
    }
    scrollPane(constraints:CENTER) {
        table {
