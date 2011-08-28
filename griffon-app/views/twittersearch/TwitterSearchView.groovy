@@ -12,19 +12,20 @@ application(title: 'TwitterSearch',
                imageIcon('/griffon-icon-32x32.png').image,
                imageIcon('/griffon-icon-16x16.png').image]) {
 
-   panel(constraints:NORTH) {
-       textField columns:15, text: bind(target:model, 'searchText')
-       button '検索', actionPerformed: controller.&search, enabled: bind{model.searchText}
-   }
-   def rowsModel = new ValueHolder()
-   scrollPane(constraints:CENTER) {
+    panel(constraints:NORTH) {
+       textField columns:15, text:bind(target:model, 'searchText'), enabled:bind{!model.searching}
+       button '検索', actionPerformed:controller.&search, enabled:bind{model.searchText && !model.searching}
+    }
+    def rowsModel = new ValueHolder()
+    scrollPane(constraints:CENTER) {
        table {
            tableModel(id:'searchResult', rowsModel:rowsModel) {
                propertyColumn header: 'User', propertyName: 'fromUser'
                propertyColumn header: 'Tweet', propertyName: 'text'
            }
        }
-   }
-   bean rowsModel, value:bind{model.tweets}
+    }
+    bean rowsModel, value:bind{model.tweets}
+    progressBar constraints:SOUTH, visible:bind{model.searching}, indeterminate:bind{model.searching}
 
 }
