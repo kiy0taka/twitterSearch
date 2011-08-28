@@ -7,3 +7,5 @@ root {
         view = '*'
     }
 }
+		root.'TwitterGriffonAddon'.addon=true
+	
